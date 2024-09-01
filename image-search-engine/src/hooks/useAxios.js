@@ -27,6 +27,7 @@ const UseAxios = (param) => {
   useEffect(() => {
     fetchData(param);
   }, [param]);
+ 
 
   return {
     response,
