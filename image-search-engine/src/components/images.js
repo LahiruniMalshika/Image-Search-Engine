@@ -1,22 +1,45 @@
-import React from "react";
+import { useContext } from "react"
+import { ImageContext } from "../App"
+import Image from "./Image";
+import Skeleton from "./Skeleton";
 
 const Images = () => {
-  return (
-    <div>
-      <h1 className="text-center mt-6 underline text-2xl">Result for Cats</h1>
+  const { response, isLoading, searchImage } = useContext(ImageContext);
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 my-10">
-        <h1>Image1</h1>
-        <h1>Image1</h1>
-        <h1>Image1</h1>
-        <h1>Image1</h1>
-        <h1>Image1</h1>
-        <h1>Image1</h1>
-        <h1>Image1</h1>
-        <h1>Image1</h1>
+  return (
+    <>
+      <h1 className="text-center mt-6 underline text-2xl">Results for {searchImage || 'Cats'}</h1>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 my-10 max-w-7xl mx-auto px-2">
+        {isLoading ? <Skeleton item={10} /> : response.map((data, key) => <Image key={key} data={data} />)}
       </div>
-    </div>
-  );
-};
+    </>
+  )
+}
 
 export default Images;
+
+// import { useContext } from "react";
+// import { ImageContext } from "../App";
+// import MasonryGrid from "./MasonryGrid";
+// import Skeleton from "./Skeleton";
+
+// const Images = () => {
+//   const { response, isLoading, searchImage } = useContext(ImageContext);
+
+//   return (
+//     <>
+//       <h1 className="text-center mt-6 underline text-2xl">
+//         Results for {searchImage || 'Cats'}
+//       </h1>
+//       <div className="my-10 max-w-7xl mx-auto px-2">
+//         {isLoading ? (
+//           <Skeleton item={10} />
+//         ) : (
+//           <MasonryGrid images={response} />
+//         )}
+//       </div>
+//     </>
+//   );
+// };
+
+// export default Images;
