@@ -1,46 +1,109 @@
-import { useState } from "react";
-import { useContext } from "react";
+// import { useState } from "react";
+// import { useContext } from "react";
+// import { ImageContext } from "../App";
+
+// const SearchField = () => {
+//   const [searchValue, setSearchValue] = useState("");
+//   const { fetchData, setSearchImage } = useContext(ImageContext);
+
+//   const handleInputChange = (e) => {
+//     setSearchValue(e.target.value);
+//   };
+
+//   const hancleButtonSearch = () => {
+//     fetchData(
+//       `search/photos?page=1&query=${searchValue}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
+//     );
+//     setSearchValue("");
+//     setSearchImage(searchValue);
+//   };
+
+//   const handleEnterSearch = e => {
+//     if(e.key==="Enter"){
+//       hancleButtonSearch();
+
+//     }
+//   };
+
+//   return (
+//     <div className="flex justify-center">
+//       <input
+//         className="flex justify-center bg-gray-50 border border-gray-300 text-sm w-full indent-2 items center p-2.5 outline-none focus:border-blue-500 focus:ring-2 rounded-tl rounded-bl"
+//         type="search"
+//         placeholder="Search Anything..."
+//         value={searchValue}
+//         onChange={handleInputChange}
+//         onKeyDown={handleEnterSearch}
+//       />
+//       <button
+//         onClick={hancleButtonSearch}
+//         disabled={!searchValue}
+//         className="bg-blue-600 px-6 py-2.5 text-white rounded-tr rounded-br focus:ring-2 focus:ring-blue-200 disabled:bg-gray-400"
+//       >
+//         {" "}
+//         Search
+//       </button>
+//     </div>
+//   );
+// };
+
+// export default SearchField;
+
+import { useState, useContext } from "react";
 import { ImageContext } from "../App";
 
 const SearchField = () => {
   const [searchValue, setSearchValue] = useState("");
+  const [imagesPerPage, setImagesPerPage] = useState(24); // Default value
   const { fetchData, setSearchImage } = useContext(ImageContext);
 
   const handleInputChange = (e) => {
     setSearchValue(e.target.value);
   };
 
-  const hancleButtonSearch = () => {
+  const handleImagesPerPageChange = (e) => {
+    setImagesPerPage(e.target.value);
+  };
+
+  const handleButtonSearch = () => {
     fetchData(
-      `search/photos?page=1&query=${searchValue}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
+      `search/photos?page=1&per_page=${imagesPerPage}&query=${searchValue}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setSearchValue("");
     setSearchImage(searchValue);
   };
 
-  const handleEnterSearch = e => {
-    if(e.key==="Enter"){
-      hancleButtonSearch();
-
+  const handleEnterSearch = (e) => {
+    if (e.key === "Enter") {
+      handleButtonSearch();
     }
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="flex flex-col md:flex-row justify-center items-center gap-4">
       <input
-        className="flex justify-center bg-gray-50 border border-gray-300 text-sm w-full indent-2 items center p-2.5 outline-none focus:border-blue-500 focus:ring-2 rounded-tl rounded-bl"
+        className="bg-gray-50 border border-gray-300 text-sm w-full md:w-auto indent-2 p-2.5 outline-none focus:border-blue-500 focus:ring-2 rounded-tl rounded-bl md:rounded-tr-none md:rounded-br-none"
         type="search"
         placeholder="Search Anything..."
         value={searchValue}
         onChange={handleInputChange}
         onKeyDown={handleEnterSearch}
       />
-      <button
-        onClick={hancleButtonSearch}
-        disabled={!searchValue}
-        className="bg-blue-600 px-6 py-2.5 text-white rounded-tr rounded-br focus:ring-2 focus:ring-blue-200 disabled:bg-gray-400"
+      <select
+        value={imagesPerPage}
+        onChange={handleImagesPerPageChange}
+        className="bg-gray-50 border border-gray-300 text-sm w-full md:w-auto p-2.5 outline-none focus:border-blue-500 focus:ring-2 rounded-md"
       >
-        {" "}
+        <option value="10">10 Images</option>
+        <option value="20">20 Images</option>
+        <option value="30">30 Images</option>
+        <option value="50">50 Images</option>
+      </select>
+      <button
+        onClick={handleButtonSearch}
+        disabled={!searchValue}
+        className="bg-blue-600 px-6 py-2.5 text-white rounded-tr rounded-br md:rounded-tl-none md:rounded-bl-none focus:ring-2 focus:ring-blue-200 disabled:bg-gray-400"
+      >
         Search
       </button>
     </div>
@@ -48,3 +111,4 @@ const SearchField = () => {
 };
 
 export default SearchField;
+
