@@ -43,6 +43,7 @@ const SearchField = () => {
         onChange={handleImagesPerPageChange}
         className="bg-gray-50 border border-gray-300 text-sm w-full md:w-auto p-2.5 outline-none focus:border-blue-500 focus:ring-2 rounded-md"
       >
+        <option value="none">image count</option>
         <option value="10">10 Images</option>
         <option value="20">20 Images</option>
         <option value="30">30 Images</option>
@@ -60,4 +61,3 @@ const SearchField = () => {
 };
 
 export default SearchField;
-
